@@ -8,7 +8,7 @@ on:
 
 # Customization: we add these env variables
 env:
-  DOCKER_HUB_NAMESPACE: andrewaterix
+  DOCKER_HUB_NAMESPACE: andrewasterix
   DOCKER_HUB_REPOSITORY: labo5
 
 jobs:
