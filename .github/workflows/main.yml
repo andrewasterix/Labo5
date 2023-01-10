@@ -1,9 +1,13 @@
-name: ci
+name: Build and Push a Docker Image
 
 on:
   push:
     branches:
       - "master"
+
+env:
+  DOCKER_HUB_NAMESPACE: andrewasterix
+  DOCKER_HUB_REPOSITORY: labo5
 
 jobs:
   build:
