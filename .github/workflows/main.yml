@@ -1,6 +1,6 @@
 # Refer to: https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
 
-name: Build and Push a Docker Image
+name: Build and Push a Docker Image to Docker Hub and GitHub Packages
 
 on:
   release:
@@ -14,8 +14,11 @@ env:
 jobs:
   
   push_to_registry:
-    name: Build/Push Docker image to Docker Hub
+    name: Build/Push Docker image to multiple registries
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -25,6 +28,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          
+      - name: Log in to the Container registry
+        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       
       # Customization: we specify explicitly which account and repository       
       - name: Extract metadata (tags, labels) for Docker
